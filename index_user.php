@@ -5,19 +5,6 @@ require("include/connecbdd.php");
 require_once("include/header.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php 
-            if(!empty($title))
-            {
-        ?>
-        <title><?= $title; }?></title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-	<body>
 		<!-- Présentation du GBAF et bannière -->
 		<div id="presentation">
 			<h1> Bienvenue sur l'extranet de GBAF </h1>
@@ -67,8 +54,6 @@ require_once("include/header.php");
 				?>			
 			</div>
 		</div>
-	</body>
-</html>
 <?php 
 require_once('include/footer.php');
 ?> 	
