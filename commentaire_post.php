@@ -12,6 +12,16 @@ if(isset($_POST['submit']))
     $post = htmlspecialchars($_POST['commentaire']);
     $prenom = htmlspecialchars($_POST['prenom']); 
 
+// Vérifier si l'utilisateur a déjà commenté
+$req_comm = $bdd->prepare('SELECT comment FROM comments WHERE user_id= :id_user AND acteur_id = :id_acteur');
+$req_comm-> execute(array(
+'id_user' => $id_user,
+'id_acteur' => $id_acteur));
+
+$comm_exist = $req_comm->rowcount();
+    if ($comm_exist == 0)  
+    {
+
         //si les champs sont remplis
         if(isset($_POST['commentaire']) AND !empty($_POST['commentaire']))
         {
@@ -20,7 +30,7 @@ if(isset($_POST['submit']))
             $addcomm->execute(array(
                 'id_user' => $id_user,
                 'id_acteur' => $id_acteur, 
-                'comment' => $post ));
+                'comment' => $post));
                 $ok_commentaire = '<p style="color: green;"> Merci pour votre commentaire <?php echo $_SESSION["prenom"]?> !</p> 
                 <p> <a href="index_user.php"> Retour à l\'accueil </a>';     
         }    
@@ -28,21 +38,15 @@ if(isset($_POST['submit']))
         {
             echo '<p style="color:  rgb(252, 116, 106);"> Veuillez remplir tous les champs !</p>'; 
         } 
+    }
+    else
+    {
+        echo '<p style="color: rgb(252, 116, 106);"> Vous ne pouvez commenter qu\'une seule fois !</p>
+        <p> <a href="index_user.php"> Retour à l\'accueil </a>';
+    }
 }
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php 
-            if(!empty($title))
-            {
-        ?>
-        <title><?= $title; }?></title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-    <body>
+
         <div id="form_commentaire">
             <form class="form" method="POST" action="commentaire_post.php?id=<?php echo $_GET['id']; ?>">
                 <input class="input" type="hidden" name="prenom" value="<?php echo $_SESSION['prenom']?>" /> 
@@ -55,8 +59,6 @@ if(isset($_POST['submit']))
             <?php if(isset($ok_commentaire)) {echo $ok_commentaire;}
             ?>
         </div>
-    </body>
-</html>
 <?php 
 require_once('include/footer.php');
 ?>
