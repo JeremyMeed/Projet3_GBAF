@@ -1,20 +1,8 @@
 <?php 
+$title = 'Mentions légales';
 require_once("include/header_public.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php 
-            if(!empty($title))
-            {
-        ?>
-        <title><?= $title; }?></title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>  
-    <body>
         <div class="bloc_mentions">
             <p style="text-align:center">MENTIONS LEGALES :</p>
             
@@ -76,8 +64,6 @@ require_once("include/header_public.php");
             
             <p style="text-align:justify">Les bases de données sont protégées par les dispositions de la loi du 1er juillet 1998 transposant la directive 96/9 du 11 mars 1996 relative à la protection juridique des bases de données.</p>
         </div>
-    </body>
-</html>
 <?php 
 require_once('include/footer.php') 
 ?>
