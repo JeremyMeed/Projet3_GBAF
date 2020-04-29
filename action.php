@@ -66,7 +66,7 @@ if(isset($_GET['t'], $_GET['id'], $_SESSION['id_user']) AND !empty($_GET['t']) A
             }
         }
         // Actualisation de la page après action 
-        header('Location: http://localhost:8888/P3_GBAF/acteur.php?id=' .$getid);
+        header('Location: acteur.php?id=' .$getid);
     } 
     else 
     {
@@ -75,6 +75,6 @@ if(isset($_GET['t'], $_GET['id'], $_SESSION['id_user']) AND !empty($_GET['t']) A
 } 
 else 
 {
-    exit('Erreur Fatale. <a href="http://localhost:8888/P3_GBAF/index_user.php">Revenir à la page d\'accueil</a>');
+    exit('Erreur Fatale. <a href="index_user.php">Revenir à la page d\'accueil</a>');
 }
 ?>
