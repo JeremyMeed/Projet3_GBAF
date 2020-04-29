@@ -28,10 +28,22 @@ if(isset($_SESSION['id_user']))
 
       if(isset($_POST['newpseudo']) AND !empty($_POST['newpseudo']) AND $_POST['newpseudo'] != $user['username']) 
       {
+
          $newpseudo = htmlspecialchars($_POST['newpseudo']);
+         $reqpseudo = $bdd->prepare('SELECT * FROM users WHERE username = ?');
+         $reqpseudo->execute(array($newpseudo));
+         $pseudoexist = $reqpseudo->rowCount();
+
+         if($pseudoexist == 0)
+         {
          $insertpseudo = $bdd->prepare("UPDATE users SET username = ? WHERE id_user = ?");
          $insertpseudo->execute(array($newpseudo, $_SESSION['id_user']));
          $okpseudo = '<p style="color: rgb(50,205,50);">Votre pseudo a bien été modifié ! </p>';
+         }
+         else
+         {
+            $erreurpseudo = '<p style="color: rgb(252, 116, 106);"><strong> Pseudo déjà utilisé ! </strong></p>';
+         }
       }
 
       if(isset($_POST['newquestion']) AND !empty($_POST['newquestion']) AND $_POST['newquestion'] != $user['question_secrete']) 
@@ -58,33 +70,22 @@ if(isset($_SESSION['id_user']))
          $okpassword = '<p style="color: rgb(50,205,50);">Votre mot de passe a bien été modifié ! </p>';
       }
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <?php
-         if(!empty($title))
-      {
-      ?>
-      <title><?= $title; }?></title>
-      <link rel="stylesheet" type="text/css" href="css/style.css">
-   </head>
-   <body>
+
       <div id="inscription">
          <h3>Paramètres du compte</h3>
             <form class="form" method="post" action="parametres.php">
                <label for="nom">Nom :</label>
-               <input class="input" type="text" name="newnom" placeholder="Nom" id="nom" />
+               <input class="input" type="text" name="newnom" placeholder="Nom" value="<?php echo $user['nom']; ?>" id="nom" />
                <?php if(isset($oknom)) { echo $oknom; } ?>
                <br /><br />
                <label for="prenom">Prénom :</label>
-               <input class="input" type="text" name="newprenom" placeholder="Prénom" id="prenom" />
+               <input class="input" type="text" name="newprenom" placeholder="Prénom" value="<?php echo $user['prenom']; ?>" id="prenom" />
                <?php if(isset($okprenom)) { echo $okprenom; } ?>
                <br /><br />
                <label for="pseudo">Pseudo :</label>
-               <input class="input" type="text" name="newpseudo" placeholder="Pseudo" id="pseudo" />
-               <?php if(isset($okpseudo)) { echo $okpseudo; } ?>
+               <input class="input" type="text" name="newpseudo" placeholder="Pseudo" value="<?php echo $user['username']; ?>" id="pseudo" />
+               <?php if(isset($okpseudo)) { echo $okpseudo;}
+                     if(isset($erreurpseudo)) { echo $erreurpseudo;} ?> 
                <br /><br />
                <label for="question">Question secrète :</label>
                <select class="input" name="newquestion" id="question">
@@ -105,8 +106,6 @@ if(isset($_SESSION['id_user']))
                <input class="bouton_connexion" type="submit" value="Mettre à jour mes données" />
             </form><br/><br/>
       </div>
-   </body>
-</html>
 <?php   
 }
 else 
