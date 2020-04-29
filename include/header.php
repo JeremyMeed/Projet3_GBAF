@@ -3,7 +3,7 @@ require("include/connecbdd.php");
 
 if(empty($_SESSION['id_user']) AND empty($_SESSION['pseudo']) AND empty($_SESSION['nom']) AND empty($_SESSION['prenom'])) 
 {
-    header('location: index_user.php');
+    header('location: page_connexion.php');
 }
 else 
 {
@@ -11,6 +11,7 @@ else
 
 <!DOCTYPE html>
 <html lang="fr">
+<!-- Header connecté -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,5 +44,3 @@ else
                     ?>
             </div>
         </header>
-    </body>
-</html>
