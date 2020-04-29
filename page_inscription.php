@@ -4,26 +4,13 @@ require("include/connecbdd.php");
 require_once("include/header_public.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <?php 
-            if(!empty($title))
-            {
-        ?>
-        <title><?= $title; }?></title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-    </head>
-	<body>
 		<div id="bloc_page">
 			<div id="inscription">
 				<h2>Inscription</h2> 
 				<?php //affiche une erreur si pseudo déjà utlisé 
 				if(!empty($_GET['err']) && $_GET['err']== "pseudo")
 				{
-					echo '<p style="color: rgb(252, 116, 106);"><strong> Pseudo déjà utlisé ! </strong></p>'; 
+					echo '<p style="color: rgb(252, 116, 106);"><strong> Pseudo déjà utilisé ! </strong></p>'; 
 				}
 				// affiche une validation si tous les champs ne sont pas remplis 
 				if(!empty($_GET['err']) && $_GET['err']== "champs")
@@ -53,10 +40,6 @@ require_once("include/header_public.php");
 				</form>
 			</div>
 		</div>
-	</body>
-</html>
 <?php 
 require_once('include/footer.php');
 ?> 
-
-	
